@@ -1,6 +1,6 @@
 = syncftp
 
-Description goes here.
+Sync via FTP, only modified files
 
 == Note on Patches/Pull Requests
  

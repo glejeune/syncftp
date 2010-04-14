@@ -5,12 +5,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "syncftp"
-    gem.summary = %Q{TODO: one-line summary of your gem}
+    gem.summary = %Q{Sync via FTP, only modified files}
     gem.description = %Q{Sync via FTP, only modified files}
     gem.email = "gregoire.lejeune@free.fr"
     gem.homepage = "http://github.com/glejeune/syncftp"
     gem.authors = ["Gregoire Lejeune"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    gem.add_dependency 'mime-types', ">= 0"
+    
+    gem.add_development_dependency "shoulda", ">= 0"
+    gem.add_development_dependency "fakefs", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
