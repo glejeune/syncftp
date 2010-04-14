@@ -130,6 +130,3 @@ class SyncFTP
     end
   end
 end
-
-x = SyncFTP.new( "localhost", :username => "greg", :password => "mcag71139" )
-x.sync( :local => "/Users/greg/temp/rest", :remote => "temp/rest2" )
