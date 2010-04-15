@@ -51,7 +51,6 @@ module Net
       altdir = dir[2..-1] if dir[0,2] == "./"
       
       return true if dir == "."
-      puts "#{find}, #{dir} or #{altdir} in ";p nlst(path)
       
       nlst( path ).include?( find ) or nlst( path ).include?( dir ) or nlst( path ).include?( altdir )
     end
