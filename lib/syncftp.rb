@@ -48,7 +48,7 @@ module Net
       path = path.join( "/" )
       path = "." if path == ""
       
-      nlst( path ).include?( dir )
+      nlst( path ).include?( find ) or nlst( path ).include?( dir )
     end
     
     #
