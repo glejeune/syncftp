@@ -190,12 +190,14 @@ class SyncFTP
         @local_md5s[remote_file] = Digest::MD5.hexdigest( File.open(local_file).read )
 
         if( @local_md5s[remote_file] != @remote_md5s[remote_file] )
-          @log.info "Copy #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
-          
           # It's a file, we just send it
           if File.binary?(local_file)
+            @log.info "Copy [Binary] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
+            
             ftp.putbinaryfile(local_file, remote_file)
           else
+            @log.info "Copy [Text] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
+            
             ftp.puttextfile(local_file, remote_file)
           end
         else
