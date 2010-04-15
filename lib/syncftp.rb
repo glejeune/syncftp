@@ -198,7 +198,7 @@ class SyncFTP
   end
   
   def send_dir(ftp, local, remote) #:nodoc:
-    ftp.mkdir_p(remote)
+    ftp.mkdir_p(remote) unless ftp.remote_dir_exist?(remote)
     
     Dir.foreach(local) do |file|
       next if file == "." or file == ".."
