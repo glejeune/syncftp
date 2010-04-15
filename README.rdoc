@@ -2,6 +2,18 @@
 
 Sync via FTP, only modified files
 
+== ChangeLog
+
+=== 0.0.1 :
+* First Release
+
+== Example
+
+	require 'syncftp'
+
+	ftp = SyncFTP.new( 'localhost', :username => "MyUser", :password => "********" )
+	ftp.sync( :local => "rootdir", :remote => "temp/syncfs/test" )
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
@@ -11,6 +23,10 @@ Sync via FTP, only modified files
 * Commit, do not mess with rakefile, version, or history.
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
+
+== Inspiration
+
+This lib was truly inspired by the awsome glynn (http://github.com/dmathieu/glynn)
 
 == Copyright
 
