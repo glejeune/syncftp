@@ -47,8 +47,13 @@ module Net
       find = path.pop
       path = path.join( "/" )
       path = "." if path == ""
+      altdir = dir
+      altdir = dir[2..-1] if dir[0,2] == "./"
       
-      nlst( path ).include?( find ) or nlst( path ).include?( dir )
+      return true if dir == "."
+      puts "#{find}, #{dir} or #{altdir} in ";p nlst(path)
+      
+      nlst( path ).include?( find ) or nlst( path ).include?( dir ) or nlst( path ).include?( altdir )
     end
     
     #
