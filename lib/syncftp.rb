@@ -83,6 +83,9 @@ class File
   # Check if the +file+ is a binary file
   #
   def self.binary?( file )
+    if MIME::Types.type_for( file ).size == 0
+      return true
+    end
     MIME::Types.type_for( file ).map{ |e| (e.binary?) ? e : nil }.compact.size > 0
   end
 end
