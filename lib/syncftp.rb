@@ -109,9 +109,16 @@ class SyncFTP
   # * +:loglevel+ - default = Logger::UNKNOWN (Cool if you don't want logs)
   #
   def initialize(host, options = {})
-    options = {:username => "anonymous", :password => nil, :logfile => STDOUT, :loglevel => Logger::UNKNOWN}.merge(options)
+    options = {
+      :username => "anonymous", 
+      :password => nil, 
+      :logfile => STDOUT, 
+      :loglevel => Logger::UNKNOWN,
+      :catalog => :remote
+    }.merge(options)
     @host, @port = host, options[:port]||21
     @username, @password = options[:username], options[:password]
+    @catalog = options[:catalog]
     @remote_md5s = {} 
     @local_md5s = {}
     @log = Logger.new( options[:logfile] )
@@ -150,6 +157,15 @@ class SyncFTP
       ftp.puttextfile( tmpname, remote+"/"+".syncftp" )
     end
     File.delete( tmpname )
+  end
+  
+  def getCatalog #:nodoc
+  end
+  
+  def saveCatalog #:nodoc
+  end
+  
+  def catalogFileName #:nodoc
   end
   
   private

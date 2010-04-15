@@ -7,6 +7,11 @@ Sync via FTP, only modified files
 === 0.0.1 :
 * First Release
 
+== TODO
+
+* Allow to choose if we want to save the catalog locally or remotely
+* Remove deleted files
+
 == Example
 
 	require 'syncftp'
