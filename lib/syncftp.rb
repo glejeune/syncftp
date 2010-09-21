@@ -52,7 +52,11 @@ module Net
       
       return true if dir == "."
       
-      nlst( path ).include?( find ) or nlst( path ).include?( dir ) or nlst( path ).include?( altdir )
+      begin
+        nlst( path ).include?( find ) or nlst( path ).include?( dir ) or nlst( path ).include?( altdir )
+      rescue Net::FTPTempError
+        return false
+      end
     end
     
     #
@@ -154,6 +158,26 @@ class SyncFTP
       File.open( tmpname, 'w' ) do |out|
         YAML.dump( @local_md5s, out )
       end
+      
+      # Delete files
+      @delete_dirs = []
+      @delete_files = []
+      @remote_md5s.keys.clone.delete_if{ |f| @local_md5s.keys.include?(f) }.each do |f|
+        if @remote_md5s[f] == "*"
+          @delete_dirs << f
+        else
+          @delete_files << f
+        end
+      end
+      @delete_files.each do |f|
+        @log.info "Delete ftp://#{@host}:#{@port}/#{f}"
+        ftp.delete( f )
+      end      
+      @delete_dirs.each do |f|
+        @log.info "Delete ftp://#{@host}:#{@port}/#{f}"
+        ftp.delete( f )
+      end      
+      
       ftp.puttextfile( tmpname, remote+"/"+".syncftp" )
     end
     File.delete( tmpname )
@@ -198,29 +222,34 @@ class SyncFTP
   end
   
   def send_dir(ftp, local, remote) #:nodoc:
-    ftp.mkdir_p(remote) unless ftp.remote_dir_exist?(remote)
+    unless ftp.remote_dir_exist?(remote)
+      @log.info "Create directory ftp://#{@host}:#{@port}/#{remote}"
+      ftp.mkdir_p(remote) 
+    end
     
     Dir.foreach(local) do |file|
       next if file == "." or file == ".."
       
       local_file = File.join( local, file )
       remote_file = remote + "/" + file
-      
+
       if File.stat(local_file).directory?
         # It is a directory, we recursively send it
+        @local_md5s[remote_file] = "*"
         send_dir(ftp, local_file, remote_file)
       else
         @local_md5s[remote_file] = Digest::MD5.hexdigest( File.open(local_file).read )
-
+        
+        # Local file still exist... Copy...
         if( @local_md5s[remote_file] != @remote_md5s[remote_file] )
           # It's a file, we just send it
           if File.binary?(local_file)
             @log.info "Copy [Binary] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
-            
+          
             ftp.putbinaryfile(local_file, remote_file)
           else
             @log.info "Copy [Text] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
-            
+          
             ftp.puttextfile(local_file, remote_file)
           end
         else

@@ -4,13 +4,24 @@ Sync via FTP, only modified files
 
 == ChangeLog
 
+=== 0.0.3 : 
+
+* Major bug correction in Net::FTP#remote_dir_exist?
+* Remove deleted files and directories
+
+=== 0.0.2 : 
+
+* Major bug correction in Net::FTP#remote_dir_exist? 
+* If file type is unknow, we assume the file is binary...
+
 === 0.0.1 :
+
 * First Release
 
 == TODO
 
 * Allow to choose if we want to save the catalog locally or remotely
-* Remove deleted files
+* Allow to synchronize from local to server, from server to local or both
 
 == Example
 
