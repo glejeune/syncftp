@@ -138,11 +138,12 @@ class SyncFTP
   # * +:remote+ : the remote directory (default = ".")
   #
   def sync( options = {} )
-    options = { :local => ".", :remote => "." }.merge( options )
-    local, remote = options[:local], options[:remote]
+    options = { :local => ".", :remote => "." , :passive => false}.merge( options )
+    local, remote , passive = options[:local], options[:remote], options[:passive]
     
     tmpname = tmpfilename
     connect do |ftp|
+      ftp.passive = passive
       # Read remote .syncftp
       begin
         ftp.gettextfile( remote+"/"+".syncftp", tmpname )
