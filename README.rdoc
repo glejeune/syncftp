@@ -4,6 +4,9 @@ Sync via FTP, only modified files
 
 == ChangeLog
 
+=== 0.0.4 :
+* Additional option (passive => boolean) to determine the kind of FTP connection (passive/active)
+
 === 0.0.3 : 
 
 * Major bug correction in Net::FTP#remote_dir_exist?
@@ -43,6 +46,11 @@ Sync via FTP, only modified files
 == Inspiration
 
 This lib was truly inspired by the awsome glynn (http://github.com/dmathieu/glynn)
+
+== Authors
+
+* Grégoire Lejeune <https://github.com/glejeune>
+* danc <https://github.com/danc>
 
 == Copyright
 
