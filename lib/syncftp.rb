@@ -25,6 +25,7 @@ require 'tmpdir'
 require 'logger'
 require 'rubygems'
 require 'mime/types'
+require 'progressbar'
 
 module Net
   class FTP
@@ -243,16 +244,26 @@ class SyncFTP
         
         # Local file still exist... Copy...
         if( @local_md5s[remote_file] != @remote_md5s[remote_file] )
+          
+          pbar = ProgressBar.new(File.basename(local_file), File.stat(local_file).size)
+          
           # It's a file, we just send it
           if File.binary?(local_file)
             @log.info "Copy [Binary] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
           
-            ftp.putbinaryfile(local_file, remote_file)
+            ftp.putbinaryfile(local_file, remote_file) { |data|
+              pbar.set(data.size)
+            }
           else
             @log.info "Copy [Text] #{local_file} to ftp://#{@host}:#{@port}/#{remote_file}"
           
-            ftp.puttextfile(local_file, remote_file)
+            ftp.puttextfile(local_file, remote_file) { |data|
+              pbar.set(data.size)
+            }
           end
+          
+          pbar.finish
+          
         else
           @log.info "#{local_file} don't need to be overwritten !"
         end

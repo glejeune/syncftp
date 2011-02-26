@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/glejeune/syncftp"
     gem.authors = ["Gregoire Lejeune"]
     gem.add_dependency 'mime-types', ">= 0"
+    gem.add_dependency 'progressbar'
     
     gem.add_development_dependency "shoulda", ">= 0"
     gem.add_development_dependency "fakefs", ">= 0"
