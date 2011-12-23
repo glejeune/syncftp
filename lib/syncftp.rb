@@ -35,7 +35,11 @@ module Net
     # Check if the +file+ exist on the remote FTP server
     #
     def remote_file_exist?( file )
-      ls( file ).size != 0
+      begin
+        ls( file ).size != 0
+      rescue Net::FTPTempError
+        return false
+      end
     end
 
     #
