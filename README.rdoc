@@ -30,10 +30,10 @@ Sync via FTP, only modified files
 
 == Example
 
-	require 'syncftp'
-
-	ftp = SyncFTP.new( 'localhost', :username => "MyUser", :password => "********" )
-	ftp.sync( :local => "rootdir", :remote => "temp/syncfs/test" )
+    require 'syncftp'
+    
+    ftp = SyncFTP.new( 'localhost', :username => "MyUser", :password => "********" )
+    ftp.sync( :local => "rootdir", :remote => "temp/syncfs/test" )
 
 == Note on Patches/Pull Requests
  
