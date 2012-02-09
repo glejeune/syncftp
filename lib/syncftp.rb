@@ -173,11 +173,19 @@ class SyncFTP
       end
       @delete_files.each do |f|
         @log.info "Delete ftp://#{@host}:#{@port}/#{f}"
-        ftp.delete( f )
+        begin
+           ftp.delete( f )
+        rescue => e
+           @log.info "ftp://#{@host}:#{@port}/#{f} does not exist"
+        end
       end      
       @delete_dirs.each do |f|
         @log.info "Delete ftp://#{@host}:#{@port}/#{f}"
-        ftp.delete( f )
+        begin
+           ftp.delete( f )
+        rescue => e
+           @log.info "ftp://#{@host}:#{@port}/#{f} does not exist"
+        end
       end      
       
       ftp.puttextfile( tmpname, remote+"/"+".syncftp" )

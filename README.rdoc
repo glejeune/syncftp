@@ -6,6 +6,8 @@ Sync via FTP, only modified files
 
 === 0.0.4 :
 
+* Add a progress bar
+
 === 0.0.3 : 
 
 * Major bug correction in Net::FTP#remote_dir_exist?
