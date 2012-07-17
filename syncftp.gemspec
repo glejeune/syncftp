@@ -32,7 +32,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.5.0}
   s.summary = %q{Sync via FTP, only modified files}
   s.test_files = [
-    "examples/sample01.rb",
     "test/helper.rb",
     "test/test_syncftp.rb"
   ]
