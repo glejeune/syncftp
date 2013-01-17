@@ -35,7 +35,13 @@ module Net
     # Check if the +file+ exist on the remote FTP server
     #
     def remote_file_exist?( file )
-      ls( file ).size != 0
+      begin
+        ls( file ).size != 0
+      rescue FTPError => e
+        errcode = e.message[0,3].to_i
+        raise if errcode != 450
+	    false
+	  end
     end
 
     #
