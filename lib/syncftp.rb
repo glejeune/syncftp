@@ -35,7 +35,13 @@ module Net
     # Check if the +file+ exist on the remote FTP server
     #
     def remote_file_exist?( file )
-      ls( file ).size != 0
+      begin
+        ls( file ).size != 0
+      rescue Net::FTPError => e
+        errcode = e.message[0,3].to_i
+        raise if errcode != 450
+	    false
+	  end
     end
 
     #
@@ -144,11 +150,13 @@ class SyncFTP
     
     tmpname = tmpfilename
     connect do |ftp|
+      @log.info "Connected to ftp://#{@host}:#{@port}"
       ftp.passive = passive
       # Read remote .syncftp
       begin
+        @log.info "Reading files summary..."
         ftp.gettextfile( remote+"/"+".syncftp", tmpname )
-        @remote_md5s = YAML.load( File.open( tmpname ).read )
+        @remote_md5s = YAML.load( File.open( tmpname ) { |file| file.read } )
       rescue Net::FTPPermError => e
         raise Net::FTPPermError, e.message, caller if ftp.remote_file_exist?( remote+"/"+".syncftp" )
       end
@@ -188,6 +196,7 @@ class SyncFTP
         end
       end      
       
+      @log.info "Updating files summary"
       ftp.puttextfile( tmpname, remote+"/"+".syncftp" )
     end
     File.delete( tmpname )
