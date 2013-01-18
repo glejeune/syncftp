@@ -37,7 +37,7 @@ module Net
     def remote_file_exist?( file )
       begin
         ls( file ).size != 0
-      rescue FTPError => e
+      rescue Net::FTPError => e
         errcode = e.message[0,3].to_i
         raise if errcode != 450
 	    false
