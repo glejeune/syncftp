@@ -154,7 +154,7 @@ class SyncFTP
       # Read remote .syncftp
       begin
         ftp.gettextfile( remote+"/"+".syncftp", tmpname )
-        @remote_md5s = YAML.load( File.open( tmpname ).read )
+        @remote_md5s = YAML.load( File.open( tmpname ) { |file| file.read } )
       rescue Net::FTPPermError => e
         raise Net::FTPPermError, e.message, caller if ftp.remote_file_exist?( remote+"/"+".syncftp" )
       end
