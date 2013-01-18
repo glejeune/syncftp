@@ -150,9 +150,11 @@ class SyncFTP
     
     tmpname = tmpfilename
     connect do |ftp|
+      @log.info "Connected to ftp://#{@host}:#{@port}"
       ftp.passive = passive
       # Read remote .syncftp
       begin
+        @log.info "Reading files summary..."
         ftp.gettextfile( remote+"/"+".syncftp", tmpname )
         @remote_md5s = YAML.load( File.open( tmpname ) { |file| file.read } )
       rescue Net::FTPPermError => e
@@ -194,6 +196,7 @@ class SyncFTP
         end
       end      
       
+      @log.info "Updating files summary"
       ftp.puttextfile( tmpname, remote+"/"+".syncftp" )
     end
     File.delete( tmpname )
