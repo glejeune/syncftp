@@ -4,6 +4,11 @@ Sync via FTP, only modified files
 
 == ChangeLog
 
+=== 0.0.5 :
+
+* Fixed bug in Net::FTP#remote_file_exist?
+* Fixed bug in SyncFTP::sync (temporary file wasn't closed propertly after reading it)
+
 === 0.0.4 :
 
 * Add a progress bar
