@@ -75,7 +75,7 @@ module Net
       path = dir.split( "/" )
       mkpath = path.shift
       begin
-        mkdir( mkpath ) unless mkpath == ""
+        mkdir( mkpath ) if mkpath && !mkpath.empty?
       rescue Net::FTPPermError => e
         raise Net::FTPPermError, e.message, caller unless remote_dir_exist?(mkpath)
       end

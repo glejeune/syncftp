@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "syncftp"
-  s.version = "0.0.5"
+  s.version = "0.0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Gregoire Lejeune"]
@@ -29,8 +29,12 @@ Gem::Specification.new do |s|
   ]
   s.homepage = "http://github.com/glejeune/syncftp"
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
-  s.summary = "Sync via FTP, only modified files"
+  s.rubygems_version = %q{2.2.2}
+  s.summary = %q{Sync via FTP, only modified files}
+  s.test_files = [
+    "test/helper.rb",
+    "test/test_syncftp.rb"
+  ]
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
